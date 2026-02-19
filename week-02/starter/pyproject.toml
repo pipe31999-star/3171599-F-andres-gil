@@ -1,0 +1,9 @@
+[project]
+name = "streaming-media-api"
+version = "0.1.0"
+description = "Semana 02 - API CRUD con validación Pydantic (Plataforma de streaming)"
+authors = [ { name = "Aprendiz" } ]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
