@@ -1,26 +1,28 @@
-// Tipos para el Dashboard del Gimnasio
-// Dominio: 🏋️ Gimnasio
+// Tipos para el Dashboard de Streaming de Video
+// Dominio: 🎬 Plataforma de Streaming de Video
 
-export interface Member {
+export interface Video {
   id: number;
-  name: string;
-  email: string;
-  membershipType: 'basic' | 'premium' | 'vip';
-  joinDate: string;
-  isActive: boolean;
+  title: string;
+  genre: string;
+  duration: number;
+  views: number;
+  rating: number;
+  releaseDate: string;
+  isNew: boolean;
 }
 
 export interface Stats {
-  totalMembers: number;
-  attendanceToday: number;
-  activeNow: number;
+  totalVideos: number;
+  activeUsers: number;
+  viewsToday: number;
   totalRevenue: number;
 }
 
 export interface RealTimeData {
-  currentOccupancy: number;
-  maxCapacity: number;
-  occupancyPercentage: number;
+  currentViews: number;
+  activeStreams: number;
+  peakViewersPercentage: number;
   lastUpdated: string;
 }
 

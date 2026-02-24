@@ -1,4 +1,4 @@
-// Componente StatsCard - Estadísticas del Gimnasio
+// Componente StatsCard - Estadísticas de Streaming
 import React, { useEffect, useState } from 'react';
 import { Stats } from '../types/index';
 import { fetchStats } from '../utils/api';
@@ -47,9 +47,9 @@ export const StatsCard: React.FC = () => {
 
   return (
     <div style={{ padding: '1rem' }}>
-      <h2>📊 Estadísticas del Gimnasio</h2>
+      <h2>📊 Estadísticas de la Plataforma</h2>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-        {/* Card 1: Total de Miembros */}
+        {/* Card 1: Total de Videos */}
         <div
           style={{
             border: '1px solid #ddd',
@@ -59,16 +59,16 @@ export const StatsCard: React.FC = () => {
             boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
           }}
         >
-          <h3 style={{ margin: '0 0 0.5rem 0', color: '#666' }}>Total Miembros</h3>
-          <p style={{ fontSize: '2rem', fontWeight: 'bold', margin: 0, color: '#2196F3' }}>
-            {stats.totalMembers}
+          <h3 style={{ margin: '0 0 0.5rem 0', color: '#666' }}>Total de Videos</h3>
+          <p style={{ fontSize: '2rem', fontWeight: 'bold', margin: 0, color: '#FF6B6B' }}>
+            {stats.totalVideos}
           </p>
           <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.9rem', color: '#999' }}>
-            miembros registrados
+            videos en la plataforma
           </p>
         </div>
 
-        {/* Card 2: Asistencias Hoy */}
+        {/* Card 2: Usuarios Activos */}
         <div
           style={{
             border: '1px solid #ddd',
@@ -78,16 +78,16 @@ export const StatsCard: React.FC = () => {
             boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
           }}
         >
-          <h3 style={{ margin: '0 0 0.5rem 0', color: '#666' }}>Asistencias Hoy</h3>
-          <p style={{ fontSize: '2rem', fontWeight: 'bold', margin: 0, color: '#4CAF50' }}>
-            {stats.attendanceToday}
+          <h3 style={{ margin: '0 0 0.5rem 0', color: '#666' }}>Usuarios Activos</h3>
+          <p style={{ fontSize: '2rem', fontWeight: 'bold', margin: 0, color: '#4ECDC4' }}>
+            {stats.activeUsers.toLocaleString()}
           </p>
           <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.9rem', color: '#999' }}>
-            personas asistieron hoy
+            usuarios conectados
           </p>
         </div>
 
-        {/* Card 3: Activos Ahora */}
+        {/* Card 3: Visualizaciones Hoy */}
         <div
           style={{
             border: '1px solid #ddd',
@@ -97,16 +97,16 @@ export const StatsCard: React.FC = () => {
             boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
           }}
         >
-          <h3 style={{ margin: '0 0 0.5rem 0', color: '#666' }}>Activos Ahora</h3>
-          <p style={{ fontSize: '2rem', fontWeight: 'bold', margin: 0, color: '#FF9800' }}>
-            {stats.activeNow}
+          <h3 style={{ margin: '0 0 0.5rem 0', color: '#666' }}>Visualizaciones Hoy</h3>
+          <p style={{ fontSize: '2rem', fontWeight: 'bold', margin: 0, color: '#45B7D1' }}>
+            {(stats.viewsToday / 1000).toFixed(0)}k
           </p>
           <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.9rem', color: '#999' }}>
-            usuarios en el gimnasio
+            vistas acumuladas
           </p>
         </div>
 
-        {/* Card 4: Ingresos Totales */}
+        {/* Card 4: Ingresos */}
         <div
           style={{
             border: '1px solid #ddd',
@@ -116,12 +116,12 @@ export const StatsCard: React.FC = () => {
             boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
           }}
         >
-          <h3 style={{ margin: '0 0 0.5rem 0', color: '#666' }}>Ingresos</h3>
-          <p style={{ fontSize: '2rem', fontWeight: 'bold', margin: 0, color: '#9C27B0' }}>
+          <h3 style={{ margin: '0 0 0.5rem 0', color: '#666' }}>Ingresos Totales</h3>
+          <p style={{ fontSize: '2rem', fontWeight: 'bold', margin: 0, color: '#95E1D3' }}>
             ${stats.totalRevenue.toFixed(0)}
           </p>
           <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.9rem', color: '#999' }}>
-            ingresos hoy
+            ingresos del período
           </p>
         </div>
       </div>

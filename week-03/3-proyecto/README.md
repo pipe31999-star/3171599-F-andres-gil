@@ -1,10 +1,10 @@
-# 💪 Dashboard del Gimnasio - Proyecto React con useEffect
+# 🎬 Dashboard de Streaming - Proyecto React con useEffect
 
 ## Descripción General
 
-Este proyecto implementa un dashboard interactivo para gestionar un gimnasio, utilizando React y TypeScript. Demuestra el dominio de `useEffect` para gestionar múltiples fuentes de datos, actualización en tiempo real y manejo de efectos secundarios complejos.
+Este proyecto implementa un dashboard interactivo para una plataforma de streaming de video, utilizando React y TypeScript. Demuestra el dominio de `useEffect` para gestionar múltiples fuentes de datos, actualización en tiempo real y manejo de efectos secundarios complejos.
 
-**Dominio Asignado:** 🏋️ Gimnasio
+**Dominio Asignado:** 📺 Plataforma de Streaming de Video | Entretenimiento y Medios
 **Duración del Taller:** 2-2.5 horas
 
 ---
@@ -74,31 +74,32 @@ starter/
 - Layout responsivo
 - Header y footer personalizados
 
-### 2. **ItemList** (Lista de Miembros)
-- Carga 5 miembros mock del gimnasio
-- Barra de búsqueda con debounce
+### 2. **ItemList** (Catálogo de Videos)
+- Carga 5 videos mock de la plataforma
+- Barra de búsqueda con debounce (por título/género)
 - Estados: loading, error, data
-- Tabla responsiva con información detallada
+- Tabla responsiva con información de videos (Título, Género, Duración, Visualizaciones, Calificación, Nuevo)
 - **useEffect #1:** Fetch inicial con AbortController
 - **useEffect #2:** Búsqueda/filtrado con debounce
 
 ### 3. **StatsCard** (Estadísticas)
 - Muestra 4 métricas clave:
-  - Total de Miembros
-  - Asistencias Hoy
-  - Activos Ahora
+  - Total de Videos en la Plataforma
+  - Usuarios Activos Ahora
+  - Visualizaciones Hoy
   - Ingresos Totales
 - Diseño en grid con cards coloreadas
 - **useEffect #1:** Carga inicial
 - **useEffect #2:** Refresco automático cada 30 segundos
 
-### 4. **RealTimeIndicator** (Ocupación en Tiempo Real)
-- Actualiza ocupación cada 5 segundos (polling)
+### 4. **RealTimeIndicator** (Transmisiones en Vivo)
+- Actualiza visualizadores en vivo cada 5 segundos (polling)
 - Barra de progreso visual
-- Estados:
-  - 🟢 Verde: < 30% (Baja ocupación)
-  - 🟠 Naranja: 30-70% (Ocupación moderada)
-  - 🔴 Rojo: > 70% (Alta ocupación)
+- Estados de carga:
+  - 🟢 Verde: < 30% de capacidad (Baja carga)
+  - 🟠 Naranja: 30-70% de capacidad (Carga moderada)
+  - 🔴 Rojo: > 70% de capacidad (Alta carga)
+- Cuenta de streams activos
 - Timestamp de última actualización
 - **useEffect:** Polling con cleanup
 
@@ -106,22 +107,22 @@ starter/
 
 ## 🔌 Funciones de API (Mock)
 
-### `fetchMembers(signal?: AbortSignal): Promise<Member[]>`
-- Retorna lista de 5 miembros
+### `fetchVideos(signal?: AbortSignal): Promise<Video[]>`
+- Retorna lista de 5 videos disponibles
 - Simula latencia de 1200ms
 - Soporta AbortController
 
 ### `fetchStats(): Promise<Stats>`
-- Retorna 4 estadísticas (números aleatorios)
+- Retorna 4 estadísticas de streaming (números aleatorios)
 - Simula latencia de 800ms
 
 ### `fetchRealTimeData(): Promise<RealTimeData>`
-- Retorna ocupación actual (0-50 personas)
+- Retorna datos en vivo: visualizadores actuales, streams activos, porcentaje de pico
 - Simula latencia de 400ms
 - Incluye timestamp
 
-### `searchMembers(query: string): Promise<Member[]>`
-- Filtra miembros por nombre o email
+### `searchVideos(query: string): Promise<Video[]>`
+- Filtra videos por título o género
 - Simula latencia de 600ms
 
 ---
@@ -146,26 +147,28 @@ export const useFetch = <T,>(fetchFn: (signal?: AbortSignal) => Promise<T>) => {
 ## 📊 Tipos TypeScript
 
 ```typescript
-interface Member {
+interface Video {
   id: number;
-  name: string;
-  email: string;
-  membershipType: 'basic' | 'premium' | 'vip';
-  joinDate: string;
-  isActive: boolean;
+  title: string;
+  genre: string;
+  duration: number;
+  views: number;
+  rating: number;
+  releaseDate: string;
+  isNew: boolean;
 }
 
 interface Stats {
-  totalMembers: number;
-  attendanceToday: number;
-  activeNow: number;
+  totalVideos: number;
+  activeUsers: number;
+  viewsToday: number;
   totalRevenue: number;
 }
 
 interface RealTimeData {
-  currentOccupancy: number;
-  maxCapacity: number;
-  occupancyPercentage: number;
+  currentViews: number;
+  activeStreams: number;
+  peakViewersPercentage: number;
   lastUpdated: string;
 }
 ```
@@ -196,7 +199,7 @@ npm build
 ## ✨ Características Implementadas
 
 ### Fetch Inicial ✅
-- ItemList carga 5 miembros al montar
+- ItemList carga 5 videos al montar
 - Muestra "Cargando..." mientras se obtiene el dato
 - Manejo de errores con mensajes claros
 
@@ -241,7 +244,7 @@ npm build
 
 ## 📝 Decisiones Técnicas
 
-### 1. Uso de Dates Mock en lugar de API real
+### 1. Uso de Datos Mock en lugar de API real
 - Mayor control y predicibilidad para testing
 - Sin dependencias externas
 - Simula latencias realistas
@@ -260,7 +263,7 @@ npm build
 
 ### 5. Colores y emojis
 - Mejoran UX con indicadores visuales claros
-- Contexto del dominio (gimnasio)
+- Contexto del dominio (plataforma de streaming de video)
 
 ---
 

@@ -1,25 +1,25 @@
-// Componente ItemList - Lista de miembros del gimnasio
+// Componente ItemList - Catálogo de Videos
 import React, { useEffect, useState } from 'react';
-import { Member } from '../types/index';
-import { fetchMembers, searchMembers } from '../utils/api';
+import { Video } from '../types/index';
+import { fetchVideos, searchVideos } from '../utils/api';
 
 export const ItemList: React.FC = () => {
-  const [members, setMembers] = useState<Member[]>([]);
+  const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Fetch inicial de miembros
+  // Fetch inicial de videos
   useEffect(() => {
     const controller = new AbortController();
     setLoading(true);
     setError(null);
 
-    fetchMembers(controller.signal)
-      .then(setMembers)
+    fetchVideos(controller.signal)
+      .then(setVideos)
       .catch((err) => {
         if (err.name !== 'AbortError') {
-          setError('Error al cargar miembros del gimnasio');
+          setError('Error al cargar videos de la plataforma');
         }
       })
       .finally(() => setLoading(false));
@@ -40,8 +40,8 @@ export const ItemList: React.FC = () => {
 
     const performSearch = async () => {
       try {
-        const results = await searchMembers(searchTerm);
-        setMembers(results);
+        const results = await searchVideos(searchTerm);
+        setVideos(results);
       } catch (err) {
         if ((err as any).name !== 'AbortError') {
           setError('Error en la búsqueda');
@@ -64,19 +64,19 @@ export const ItemList: React.FC = () => {
     setSearchTerm('');
   };
 
-  if (loading && members.length === 0) {
-    return <div style={{ padding: '1rem' }}>⏳ Cargando miembros...</div>;
+  if (loading && videos.length === 0) {
+    return <div style={{ padding: '1rem' }}>⏳ Cargando catálogo de videos...</div>;
   }
 
   return (
     <div style={{ padding: '1rem' }}>
-      <h2>👥 Miembros del Gimnasio</h2>
+      <h2>🎬 Catálogo de Videos</h2>
 
       {/* Barra de búsqueda */}
       <div style={{ marginBottom: '1rem' }}>
         <input
           type="text"
-          placeholder="Buscar por nombre o email..."
+          placeholder="Buscar por título o género..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
@@ -95,42 +95,49 @@ export const ItemList: React.FC = () => {
 
       {error && <div style={{ color: 'red' }}>❌ {error}</div>}
 
-      {loading && members.length > 0 && (
+      {loading && videos.length > 0 && (
         <div style={{ color: 'gray' }}>Actualizando...</div>
       )}
 
-      {members.length > 0 ? (
+      {videos.length > 0 ? (
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ backgroundColor: '#f0f0f0' }}>
-              <th style={{ border: '1px solid #ddd', padding: '0.5rem' }}>Nombre</th>
-              <th style={{ border: '1px solid #ddd', padding: '0.5rem' }}>Email</th>
-              <th style={{ border: '1px solid #ddd', padding: '0.5rem' }}>Membresía</th>
+              <th style={{ border: '1px solid #ddd', padding: '0.5rem' }}>Título</th>
+              <th style={{ border: '1px solid #ddd', padding: '0.5rem' }}>Género</th>
+              <th style={{ border: '1px solid #ddd', padding: '0.5rem' }}>Duración</th>
+              <th style={{ border: '1px solid #ddd', padding: '0.5rem' }}>Visitas</th>
+              <th style={{ border: '1px solid #ddd', padding: '0.5rem' }}>Rating</th>
               <th style={{ border: '1px solid #ddd', padding: '0.5rem' }}>Estado</th>
             </tr>
           </thead>
           <tbody>
-            {members.map((member) => (
-              <tr key={member.id}>
+            {videos.map((video) => (
+              <tr key={video.id}>
                 <td style={{ border: '1px solid #ddd', padding: '0.5rem' }}>
-                  {member.name}
+                  {video.title}
                 </td>
                 <td style={{ border: '1px solid #ddd', padding: '0.5rem' }}>
-                  {member.email}
+                  {video.genre}
                 </td>
                 <td style={{ border: '1px solid #ddd', padding: '0.5rem' }}>
-                  {member.membershipType.charAt(0).toUpperCase() +
-                    member.membershipType.slice(1)}
+                  {video.duration} min
                 </td>
                 <td style={{ border: '1px solid #ddd', padding: '0.5rem' }}>
-                  {member.isActive ? '✅ Activo' : '❌ Inactivo'}
+                  {video.views.toLocaleString()}
+                </td>
+                <td style={{ border: '1px solid #ddd', padding: '0.5rem' }}>
+                  ⭐ {video.rating.toFixed(1)}
+                </td>
+                <td style={{ border: '1px solid #ddd', padding: '0.5rem' }}>
+                  {video.isNew ? '🆕 Nuevo' : '✅ Disponible'}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       ) : (
-        <div style={{ color: 'gray' }}>No hay miembros para mostrar</div>
+        <div style={{ color: 'gray' }}>No hay videos para mostrar</div>
       )}
     </div>
   );

@@ -19,10 +19,10 @@ export const Dashboard: React.FC = () => {
       {/* Header */}
       <header style={{ marginBottom: '2rem', textAlign: 'center' }}>
         <h1 style={{ margin: '0 0 0.5rem 0', color: '#333' }}>
-          💪 Dashboard del Gimnasio
+          🎬 Dashboard de Streaming
         </h1>
         <p style={{ margin: 0, color: '#666' }}>
-          Gestión en tiempo real de miembros y ocupación
+          Plataforma de streaming de video | Entretenimiento y Medios
         </p>
       </header>
 

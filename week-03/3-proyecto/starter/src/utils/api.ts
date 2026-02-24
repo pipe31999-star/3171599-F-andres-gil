@@ -1,96 +1,106 @@
-// Funciones de API para el Dashboard del Gimnasio
-import { Member, Stats, RealTimeData } from '../types/index';
+// Funciones de API para el Dashboard de Streaming de Video
+import { Video, Stats, RealTimeData } from '../types/index';
 
-// Datos mock de miembros del gimnasio
-const MOCK_MEMBERS: Member[] = [
+// Datos mock de videos en la plataforma
+const MOCK_VIDEOS: Video[] = [
   {
     id: 1,
-    name: 'Carlos López',
-    email: 'carlos@example.com',
-    membershipType: 'premium',
-    joinDate: '2023-01-15',
-    isActive: true,
+    title: 'La Gran Aventura',
+    genre: 'Acción',
+    duration: 120,
+    views: 15420,
+    rating: 8.5,
+    releaseDate: '2024-01-15',
+    isNew: false,
   },
   {
     id: 2,
-    name: 'María García',
-    email: 'maria@example.com',
-    membershipType: 'vip',
-    joinDate: '2022-06-20',
-    isActive: true,
+    title: 'Comedia Familiar',
+    genre: 'Comedia',
+    duration: 95,
+    views: 8900,
+    rating: 7.2,
+    releaseDate: '2024-02-10',
+    isNew: true,
   },
   {
     id: 3,
-    name: 'Juan Martínez',
-    email: 'juan@example.com',
-    membershipType: 'basic',
-    joinDate: '2024-01-10',
-    isActive: true,
+    title: 'Documental Naturaleza',
+    genre: 'Documental',
+    duration: 60,
+    views: 12350,
+    rating: 9.1,
+    releaseDate: '2024-01-20',
+    isNew: false,
   },
   {
     id: 4,
-    name: 'Ana Rodríguez',
-    email: 'ana@example.com',
-    membershipType: 'premium',
-    joinDate: '2023-05-08',
-    isActive: false,
+    title: 'Drama Histórico',
+    genre: 'Drama',
+    duration: 150,
+    views: 21500,
+    rating: 8.8,
+    releaseDate: '2023-12-01',
+    isNew: false,
   },
   {
     id: 5,
-    name: 'Pedro Sánchez',
-    email: 'pedro@example.com',
-    membershipType: 'basic',
-    joinDate: '2024-02-01',
-    isActive: true,
+    title: 'Thriller Psicológico',
+    genre: 'Thriller',
+    duration: 110,
+    views: 18900,
+    rating: 8.3,
+    releaseDate: '2024-02-05',
+    isNew: true,
   },
 ];
 
 // Simular latencia de red
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// Fetch de miembros del gimnasio
-export const fetchMembers = async (signal?: AbortSignal): Promise<Member[]> => {
+// Fetch de videos de la plataforma
+export const fetchVideos = async (signal?: AbortSignal): Promise<Video[]> => {
   await delay(1200);
   if (signal?.aborted) throw new Error('Solicitud cancelada');
-  return MOCK_MEMBERS;
+  return MOCK_VIDEOS;
 };
 
-// Fetch de estadísticas del gimnasio
+// Fetch de estadísticas de streaming
 export const fetchStats = async (): Promise<Stats> => {
   await delay(800);
   return {
-    totalMembers: MOCK_MEMBERS.length,
-    attendanceToday: Math.floor(Math.random() * 30) + 15,
-    activeNow: Math.floor(Math.random() * 25) + 5,
-    totalRevenue: 12500 + Math.random() * 5000,
+    totalVideos: MOCK_VIDEOS.length,
+    activeUsers: Math.floor(Math.random() * 5000) + 1000,
+    viewsToday: Math.floor(Math.random() * 100000) + 50000,
+    totalRevenue: 28500 + Math.random() * 12000,
   };
 };
 
-// Fetch de datos en tiempo real (ocupación actual)
-let currentOccupancy = 18;
+// Fetch de datos en tiempo real (visualizaciones activas)
+let currentViews = 3200;
 export const fetchRealTimeData = async (): Promise<RealTimeData> => {
   await delay(400);
-  // Simular cambio de ocupación
-  currentOccupancy += Math.floor(Math.random() * 5) - 2;
-  currentOccupancy = Math.max(0, Math.min(50, currentOccupancy));
+  // Simular cambio de visualizaciones
+  currentViews += Math.floor(Math.random() * 50) - 10;
+  currentViews = Math.max(0, currentViews);
   
-  const maxCapacity = 50;
-  const occupancyPercentage = Math.round((currentOccupancy / maxCapacity) * 100);
+  const maxViewers = 5000;
+  const peakViewersPercentage = Math.round((currentViews / maxViewers) * 100);
   
   return {
-    currentOccupancy,
-    maxCapacity,
-    occupancyPercentage,
+    currentViews,
+    activeStreams: Math.floor(Math.random() * 15) + 3,
+    peakViewersPercentage,
     lastUpdated: new Date().toLocaleTimeString('es-ES'),
   };
 };
 
-// Búsqueda de miembros (opcional)
-export const searchMembers = async (query: string): Promise<Member[]> => {
+// Búsqueda de videos (opcional)
+export const searchVideos = async (query: string): Promise<Video[]> => {
   await delay(600);
-  return MOCK_MEMBERS.filter(
-    (member) =>
-      member.name.toLowerCase().includes(query.toLowerCase()) ||
-      member.email.toLowerCase().includes(query.toLowerCase())
+  return MOCK_VIDEOS.filter(
+    (video) =>
+      video.title.toLowerCase().includes(query.toLowerCase()) ||
+      video.genre.toLowerCase().includes(query.toLowerCase())
   );
 };

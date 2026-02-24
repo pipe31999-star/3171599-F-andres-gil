@@ -1,4 +1,4 @@
-// Componente RealTimeIndicator - Ocupación en tiempo real
+// Componente RealTimeIndicator - Visualizaciones en Vivo
 import React, { useEffect, useState } from 'react';
 import { RealTimeData } from '../types/index';
 import { fetchRealTimeData } from '../utils/api';
@@ -21,7 +21,7 @@ export const RealTimeIndicator: React.FC = () => {
         }
       } catch (err) {
         if (isMounted) {
-          setError('Error al obtener datos en tiempo real');
+          setError('Error al obtener datos en vivo');
         }
       } finally {
         if (isMounted) {
@@ -44,7 +44,7 @@ export const RealTimeIndicator: React.FC = () => {
   }, []);
 
   if (loading && !data) {
-    return <div style={{ padding: '1rem' }}>⏳ Cargando datos en tiempo real...</div>;
+    return <div style={{ padding: '1rem' }}>⏳ Cargando datos en vivo...</div>;
   }
 
   if (error) {
@@ -55,14 +55,14 @@ export const RealTimeIndicator: React.FC = () => {
     return <div style={{ padding: '1rem' }}>Sin datos disponibles</div>;
   }
 
-  // Determinar color según porcentaje de ocupación
+  // Determinar color según porcentaje de pico de visualizadores
   const getColor = (percentage: number): string => {
     if (percentage < 30) return '#4CAF50'; // Verde
     if (percentage < 70) return '#FF9800'; // Naranja
     return '#F44336'; // Rojo
   };
 
-  const barColor = getColor(data.occupancyPercentage);
+  const barColor = getColor(data.peakViewersPercentage);
 
   return (
     <div
@@ -74,22 +74,22 @@ export const RealTimeIndicator: React.FC = () => {
         margin: '1rem 0',
       }}
     >
-      <h2 style={{ margin: '0 0 1rem 0' }}>⏱️ Ocupación en Tiempo Real</h2>
+      <h2 style={{ margin: '0 0 1rem 0' }}>🔴 Transmisiones en Vivo</h2>
 
       {/* Indicador principal */}
       <div style={{ marginBottom: '1.5rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
           <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>
-            {data.currentOccupancy} / {data.maxCapacity} personas
+            {data.currentViews.toLocaleString()} visualizadores en vivo
           </span>
           <span
             style={{
-              fontSize: '1.5rem',
+              fontSize: '1.2rem',
               fontWeight: 'bold',
               color: barColor,
             }}
           >
-            {data.occupancyPercentage}%
+            {data.peakViewersPercentage}% capacidad
           </span>
         </div>
 
@@ -106,7 +106,7 @@ export const RealTimeIndicator: React.FC = () => {
         >
           <div
             style={{
-              width: `${data.occupancyPercentage}%`,
+              width: `${data.peakViewersPercentage}%`,
               height: '100%',
               backgroundColor: barColor,
               transition: 'width 0.3s ease',
@@ -118,26 +118,30 @@ export const RealTimeIndicator: React.FC = () => {
               fontSize: '0.9rem',
             }}
           >
-            {data.occupancyPercentage > 10 && `${data.occupancyPercentage}%`}
+            {data.peakViewersPercentage > 10 && `${data.peakViewersPercentage}%`}
           </div>
         </div>
       </div>
 
       {/* Estado visual */}
       <div style={{ marginBottom: '1rem' }}>
-        {data.occupancyPercentage < 30 && (
+        <p style={{ margin: '0.5rem 0', fontWeight: 'bold' }}>
+          📡 Streams activos: <span style={{ color: '#FF6B6B', fontSize: '1.2rem' }}>{data.activeStreams}</span>
+        </p>
+        
+        {data.peakViewersPercentage < 30 && (
           <p style={{ margin: 0, color: '#4CAF50', fontWeight: 'bold' }}>
-            ✅ Gimnasio con baja ocupación - Buen momento para entrenar
+            ✅ Carga baja - Capacidad disponible
           </p>
         )}
-        {data.occupancyPercentage >= 30 && data.occupancyPercentage < 70 && (
+        {data.peakViewersPercentage >= 30 && data.peakViewersPercentage < 70 && (
           <p style={{ margin: 0, color: '#FF9800', fontWeight: 'bold' }}>
-            ⚠️ Ocupación moderada - Gimnasio funcional
+            ⚠️ Carga moderada - Plataforma estable
           </p>
         )}
-        {data.occupancyPercentage >= 70 && (
+        {data.peakViewersPercentage >= 70 && (
           <p style={{ margin: 0, color: '#F44336', fontWeight: 'bold' }}>
-            🔴 Ocupación alta - Considere venir en otro momento
+            🔴 Carga alta - Posible congestión
           </p>
         )}
       </div>
