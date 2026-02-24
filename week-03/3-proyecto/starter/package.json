@@ -1,7 +1,7 @@
 {
-  "name": "streaming-dashboard",
+  "name": "gym-dashboard",
   "version": "1.0.0",
-  "description": "Dashboard interactivo para plataforma de streaming",
+  "description": "Dashboard interactivo del Gimnasio con datos en tiempo real",
   "private": true,
   "dependencies": {
     "react": "^18.2.0",
@@ -9,7 +9,7 @@
     "react-scripts": "5.0.1"
   },
   "devDependencies": {
-    "@types/node": "^25.3.0",
+    "@types/node": "^18.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "typescript": "^4.9.5"

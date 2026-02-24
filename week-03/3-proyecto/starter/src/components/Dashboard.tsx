@@ -6,11 +6,54 @@ import { RealTimeIndicator } from './RealTimeIndicator';
 
 export const Dashboard: React.FC = () => {
   return (
-    <div style={{ maxWidth: 800, margin: '0 auto', padding: '2rem' }}>
-      <h1>Dashboard Plataforma de Streaming</h1>
-      <StatsCard />
-      <RealTimeIndicator />
-      <ItemList />
+    <div
+      style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '2rem 1rem',
+        fontFamily: 'Arial, sans-serif',
+        backgroundColor: '#fafafa',
+        minHeight: '100vh',
+      }}
+    >
+      {/* Header */}
+      <header style={{ marginBottom: '2rem', textAlign: 'center' }}>
+        <h1 style={{ margin: '0 0 0.5rem 0', color: '#333' }}>
+          💪 Dashboard del Gimnasio
+        </h1>
+        <p style={{ margin: 0, color: '#666' }}>
+          Gestión en tiempo real de miembros y ocupación
+        </p>
+      </header>
+
+      {/* Indicador en tiempo real (destacado) */}
+      <div style={{ marginBottom: '2rem' }}>
+        <RealTimeIndicator />
+      </div>
+
+      {/* Estadísticas */}
+      <div style={{ marginBottom: '2rem' }}>
+        <StatsCard />
+      </div>
+
+      {/* Lista de miembros */}
+      <div style={{ backgroundColor: 'white', borderRadius: '8px', padding: '1rem' }}>
+        <ItemList />
+      </div>
+
+      {/* Footer */}
+      <footer
+        style={{
+          marginTop: '3rem',
+          paddingTop: '1rem',
+          borderTop: '1px solid #ddd',
+          textAlign: 'center',
+          color: '#999',
+          fontSize: '0.9rem',
+        }}
+      >
+        <p>Dashboard del Gimnasio © 2025 - Desarrollado con React y TypeScript</p>
+      </footer>
     </div>
   );
 };

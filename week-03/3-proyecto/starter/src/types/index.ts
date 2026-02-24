@@ -1,21 +1,31 @@
-// Tipos para plataforma de streaming
+// Tipos para el Dashboard del Gimnasio
+// Dominio: 🏋️ Gimnasio
 
-export interface Video {
+export interface Member {
   id: number;
-  title: string;
-  genre: string;
-  duration: number; // minutos
-  views: number;
-  // Puedes agregar más propiedades relevantes
+  name: string;
+  email: string;
+  membershipType: 'basic' | 'premium' | 'vip';
+  joinDate: string;
+  isActive: boolean;
 }
 
 export interface Stats {
-  totalVideos: number;
-  activeUsers: number;
-  occupancyPercentage: number;
+  totalMembers: number;
+  attendanceToday: number;
+  activeNow: number;
+  totalRevenue: number;
 }
 
 export interface RealTimeData {
-  currentViews: number;
+  currentOccupancy: number;
+  maxCapacity: number;
+  occupancyPercentage: number;
   lastUpdated: string;
+}
+
+export interface FetchState<T> {
+  data: T | null;
+  loading: boolean;
+  error: string | null;
 }
